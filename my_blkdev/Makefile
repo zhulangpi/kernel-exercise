@@ -1,13 +1,12 @@
-obj-m += mycdev_map.o
+obj-m += my_blkdev.o
 PWD := $(shell pwd)
-KERNELDIR ?= /home/zlp/qemu_arm64/linux-4.19/out_aarch64
+KERNELDIR ?= ~/qemu_arm64/linux-4.19/out_aarch64
 CROSS_COMPILE = aarch64-linux-gnu-
 CC = $(CROSS_COMPILE)gcc
 
 
 default:
 	$(MAKE) -C $(KERNELDIR)  M=$(PWD) modules ARCH=arm64 CROSS_COMPILE=$(CROSS_COMPILE)
-	$(CC) read_test.c -o read_test.out
-	$(CC) write_test.c -o write_test.out
+	$(CC) test_user.c -static -o test_user.out
 clean:
 	@rm -rf *.o *.out *.mod.c *.mod.o *.ko *.order *.symvers .*.cmd .tmp_versions
